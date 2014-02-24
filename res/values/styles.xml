@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="title">
+        <item name="android:layout_width">fill_parent</item>
+       	<item name="android:layout_height">wrap_content</item>
+       	<item name="android:textColor">@color/text_light</item>
+       	<item name="android:textSize">18dp</item>
+       	<item name="android:textStyle">bold</item>
+       	<item name="android:layout_marginLeft">12dp</item>
+       	<item name="android:layout_marginTop">8dp</item>
+       	<item name="android:layout_marginBottom">8dp</item>
+    </style>
+    <style name="normal_text">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+    <style name="permission_titles">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+    <style name="permission_text">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+</resources>
