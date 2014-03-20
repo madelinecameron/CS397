@@ -80,7 +80,9 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application>{
         ImageView myImage = (ImageView) row.findViewById(R.id.applicationlistviewimage);
         TextView myTitle = (TextView) row.findViewById(R.id.applicationlistviewname);
         TextView myThreatLevel = (TextView) row.findViewById(R.id.applicationlistviewthreatlevel);
-
+        ImageView myCameraIcon = (ImageView) row.findViewById(R.id.applicationlistviewcameraicon);
+       
+        myCameraIcon.setVisibility(AppList.get(position).usesCamera()?0:8);
         myImage.setImageDrawable(AppList.get(position).getIcon());
         myTitle.setText(AppList.get(position).getLabel());
         myThreatLevel.setText(AppList.get(position).getThreatDescription());

@@ -6,31 +6,38 @@
               android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/applicationlistviewimage"
         android:layout_width="32dp"
         android:layout_height="42dp"
-        android:src="@drawable/icon"
+        android:layout_gravity="center_horizontal|top"
         android:layout_margin="10dp"
-        android:id="@+id/applicationlistviewimage"
         android:contentDescription="@string/app_icon"
-        android:layout_gravity="center_horizontal|top"/>
+        android:src="@drawable/icon" />
 
     <TextView
-        android:layout_width="108dp"
-        android:layout_height="16dp"
-        android:text=""
         android:id="@+id/applicationlistviewname"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_toRightOf="@+id/applicationlistviewimage"
-        android:layout_alignTop="@+id/applicationlistviewimage"
-        android:layout_alignParentRight="true"/>
-    <TextView
         android:layout_width="108dp"
         android:layout_height="16dp"
-        android:text=""
-        android:id="@+id/applicationlistviewthreatlevel"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/applicationlistviewimage"
         android:layout_gravity="center_horizontal|top"
-        android:layout_toRightOf="@+id/applicationlistviewimage"
+        android:layout_toRightOf="@+id/applicationlistviewimage" />
+
+    <TextView
+        android:id="@+id/applicationlistviewthreatlevel"
+        android:layout_width="108dp"
+        android:layout_height="16dp"
+        android:layout_alignRight="@+id/applicationlistviewname"
         android:layout_below="@+id/applicationlistviewname"
-        android:layout_alignRight="@+id/applicationlistviewname"/>
+        android:layout_gravity="center_horizontal|top"
+        android:layout_toRightOf="@+id/applicationlistviewimage" />
+
+    <ImageView
+        android:id="@+id/applicationlistviewcameraicon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_above="@+id/applicationlistviewthreatlevel"
+        android:layout_alignLeft="@+id/applicationlistviewimage"
+        android:src="@android:drawable/ic_menu_camera" />
 
 </RelativeLayout>

@@ -195,6 +195,14 @@ public class Application {
         if (!permissions.contains(cleanName))
             permissions.add(cleanName);
     }
+    /** Whether of not this application uses the camera permissions
+     * 
+     * @return True if the application declares the android.permissions.camera permission
+     */
+    public boolean usesCamera()
+    {
+    	return permissions.contains("Camera");
+    }
 
     /** Gets the hexadecimal color value associated with the threat level
      *
