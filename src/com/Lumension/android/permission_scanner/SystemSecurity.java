@@ -31,7 +31,7 @@ public class SystemSecurity {
 	private List<String> sysSettingsList = Arrays.asList( "AIRPLANE_MODE_ON", "BLUETOOTH_DISCOVERABILITY", "BLUETOOTH_ON", "INSTALL_NON_MARKET_APPS");
 	private	List<String> secureSettingsList = Arrays.asList("LOCK_PATTERN_VISIBLE", "LOCK_PATTERN_ENABLED");
 		
-	public void CalculateSystemSecurity() {
+	public void Calculate() {
 		Settings.Secure secureSettings = new Settings.Secure();
 		Settings.System sysSettings = new Settings.System();
 		ContentResolver resolver = null;
@@ -42,15 +42,23 @@ public class SystemSecurity {
 		}
 	}
 	
-	public void RemovePermissionFromList(String permissionName)
+	private void RetrieveApplicationList()
 	{
+		
 	}
 	
-	public void AddPermissionToList(String permissionName)
+	public boolean RemovePermissionFromList(String permissionName)
 	{
+		throw new UnsupportedOperationException("This is not implemented.");
 	}
 	
-	public void ModifyPermissionSeverity(String permissionName, int modifier)
+	public boolean AddPermissionToList(String permissionName)
 	{
+		throw new UnsupportedOperationException("This is not implemented.");
+	}
+	
+	public boolean ModifyPermissionSeverity(String permissionName, int modifier)
+	{
+		throw new UnsupportedOperationException("This is not implemented.");
 	}
 }

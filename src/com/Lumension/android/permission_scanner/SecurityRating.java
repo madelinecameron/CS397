@@ -1,14 +1,22 @@
 package com.Lumension.android.permission_scanner;
 
+import java.awt.Color;
+import java.util.List;
+
 public class SecurityRating {
-	private Color ratingColor;
-	private int ratingNum;
-	private List<String> relatedPermissionNames;
+	public Color ratingColor;
+	public int ratingNum;
+	public List<String> relatedPermissionNames;
+	public int storeRating;
+	public int downloads;
 	
-	public SecurityRating Create(relatedPermissionNames)
+	public SecurityRating Create(List<String> relatedPerms)
 	{
-	
+		return new SecurityRating();
 	}
 	
-	public 
+	public SecurityRating Create(Color ratingColor, int ratingNum, List<String> relatedPerms)
+	{
+		return new SecurityRating();
+	}
 }
