@@ -2,3 +2,6 @@ bin/*
 .idea/*
 gen/*
 out/*
+.settings/*
+.metadata/*
+.classpath

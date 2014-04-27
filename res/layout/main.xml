@@ -3,11 +3,13 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/main_layout">
+    android:id="@+id/mainLayout">
 
-    <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/applicationlistview"/>
+    <fragment
+    android:name="com.Lumension.android.permission_scanner.ApplicationListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/singleFragment">
+</fragment>
 </LinearLayout>
 
