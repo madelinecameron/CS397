@@ -4,6 +4,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class ApplicationList {
     private static ApplicationList instance = null;
 
     /** The list of each application object */
-    public static List<Application> AppList;
+    public static List<Application> appList;
 
     /** Gets the ApplicationList instance
      *
@@ -46,7 +47,7 @@ public class ApplicationList {
      */
     protected ApplicationList(PackageManager packageManager){
         List<String> alreadyAdded = new ArrayList<String>();
-        AppList = new ArrayList<Application>();
+        appList = new ArrayList<Application>();
         Application applicationToAdd;
         String packageName;
         String applicationLabel;
@@ -74,7 +75,9 @@ public class ApplicationList {
                     versionCode = 0;
                 }
                 if(!alreadyAdded.contains(packageName)) {
-                    applicationToAdd = new Application(applicationLabel, packageName, versionCode, system, icon);
+                    applicationToAdd = new Application(applicationLabel, packageName, versionCode, system, icon,appList.size());
+                    applicationToAdd.setStars(0);
+                    applicationToAdd.setDownloadDescription("0+");
                     try {
                         packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
                         if(packageInfo.requestedPermissions != null && packageInfo.requestedPermissions.length > 0) {
@@ -86,10 +89,10 @@ public class ApplicationList {
                             }
                         }
                     } catch (Exception except) {
-                        // Fail
+                        Log.e("lumension", except.getMessage());
                     }
                     applicationToAdd.setThreatLevel(applicationToAdd.calculateThreat());
-                    AppList.add(applicationToAdd);
+                    appList.add(applicationToAdd);
                     alreadyAdded.add(packageName);
                 }
             }
@@ -101,7 +104,7 @@ public class ApplicationList {
      * @param index The index value of the requested application
      * @return The Application object at the specified index
      */
-    public Application getApplication(int index) {
-        return AppList.get(index);
+    public static Application getApplication(int index) {
+        return appList.get(index);
     }
 }

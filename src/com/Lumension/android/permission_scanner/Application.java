@@ -44,8 +44,50 @@ public class Application {
 
     /** A list of each requested permission */
     private List<String> permissions;
+    
+    
+    /** The position of this application within the list **/
+    private int index;
+    
+    /** The number of downloads the application has, is usually a range or number+ so its a string **/
+    private String downloadDescription;
+    
+    /** The rating of the application **/
+    private float stars;
 
-    /** Constructor for the Application object
+    /**
+     * Gets the download description
+     * @return the download description
+     */
+    public String getDownloadDescription() {
+		return downloadDescription;
+	}
+
+    /**
+     * Sets the download description
+     * @param downloadDescription
+     */
+	public void setDownloadDescription(String downloadDescription) {
+		this.downloadDescription = downloadDescription;
+	}
+
+	/**
+	 * Gets the application rating
+	 * @return the application rating
+	 */
+	public float getStars() {
+		return stars;
+	}
+
+	/**
+	 * Sets the application rating
+	 * @param stars
+	 */
+	public void setStars(float stars) {
+		this.stars = stars;
+	}
+
+	/** Constructor for the Application object
      *
      * @param label The label of the application
      * @param name The name of the application
@@ -53,7 +95,7 @@ public class Application {
      * @param system boolean value of if the application is a system app
      * @param icon the application icon
      */
-    public Application(String label, String name, int versionCode, boolean system, Drawable icon) {
+    public Application(String label, String name, int versionCode, boolean system, Drawable icon,int index) {
         this.label = label;
         this.name = name;
         this.versionCode = versionCode;
@@ -61,6 +103,7 @@ public class Application {
         this.icon = icon;
         this.threatDescription = "";
         permissions = new ArrayList<String>();
+        this.index = index;
     }
 
     /** Get the label of the object
@@ -298,6 +341,11 @@ public class Application {
                 this.setThreatDescription("Risk Level: Minimal");
         }
         return threat;
+    }
+    
+    public int getIndex()
+    {
+    	return index;
     }
 }
 

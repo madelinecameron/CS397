@@ -5,5 +5,5 @@
     android:layout_height="wrap_content"
     android:padding="2dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/textView"
-    style="@style/permission_text"></TextView>
+    android:id="@+id/applicationDetailTextView"
+    style="@style/permissionText"></TextView>

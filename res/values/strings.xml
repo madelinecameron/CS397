@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Permission Scanner</string>
-    <string name="app_icon">Application Icon</string>
+    <string name="appName">Permission Scanner</string>
+    <string name="appIcon">Application Icon</string>
+    <string name="cameraIcon">Camera Icon</string>
+    <string name="manageButton">Manage</string>
 </resources>

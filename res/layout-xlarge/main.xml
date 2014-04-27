@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical" >
+
+    <fragment
+        android:id="@+id/mainDetailFragment"
+        android:name="com.Lumension.android.permission_scanner.ApplicationDetailFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/mainListFragment"
+        tools:layout="@layout/application_details" />
+
+    <fragment
+        android:id="@+id/mainListFragment"
+        android:name="com.Lumension.android.permission_scanner.ApplicationListFragment"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/application_list_fragment" />
+
+    <View
+        android:id="@+id/colorView"
+        android:layout_width="2dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/mainListFragment"
+        android:background="@color/backgroundLight" />
+
+</RelativeLayout>

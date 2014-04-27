@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,12 +29,13 @@ import java.util.List;
  *
  */
 
-public class ApplicationViewAdapter extends ArrayAdapter<Application>{
+public class ApplicationViewAdapter extends ArrayAdapter<Application> implements Filterable{
     /** Instance of Context object required for accessing application-specific resources */
     Context context;
 
     /** Local variable for the Application List */
-    private List<Application> AppList;
+    private List<Application> appList;
+    private static List<Application> filteredApps =new ArrayList<Application>();;
 
     /** Constructor for the ApplicationViewAdapter object
      *
@@ -39,10 +43,18 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application>{
      * @param appList The list of applications to display
      */
     ApplicationViewAdapter(Context c, List<Application> appList) {
-        super(c, R.layout.application_list_item, R.id.applicationlistview, appList);
+        super(c, R.layout.application_list_item, R.id.applicationListView, filteredApps);
         this.context = c;
-        this.AppList = appList;
-
+        this.appList = appList;
+        
+       
+        
+        filteredApps = new ArrayList<Application>();
+        for(Application app : appList)
+        {
+        	filteredApps.add(app);
+        }
+        
         Comparator<Application> comparator = new Comparator<Application>() {
             @Override
             public int compare(Application lhs, Application rhs) {
@@ -50,7 +62,13 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application>{
             }
         };
 
-        Collections.sort(AppList, comparator);
+        Collections.sort(filteredApps, comparator);
+        
+        for(Application app : appList)
+        {
+        	add(app);
+        }
+        notifyDataSetChanged();
     }
 
     /** Get the Application object at the requested position
@@ -59,7 +77,7 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application>{
      * @return The Application object at the specified index
      */
     public Application getItem(int position) {
-        return AppList.get(position);
+        return filteredApps.get(position);
     }
 
     /** Dynamically creates the view
@@ -77,19 +95,75 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application>{
             row = inflater.inflate(R.layout.application_list_item, parent, false);
         }
 
-        ImageView myImage = (ImageView) row.findViewById(R.id.applicationlistviewimage);
-        TextView myTitle = (TextView) row.findViewById(R.id.applicationlistviewname);
-        TextView myThreatLevel = (TextView) row.findViewById(R.id.applicationlistviewthreatlevel);
-        ImageView myCameraIcon = (ImageView) row.findViewById(R.id.applicationlistviewcameraicon);
-       
-        myCameraIcon.setVisibility(AppList.get(position).usesCamera()?0:8);
-        myImage.setImageDrawable(AppList.get(position).getIcon());
-        myTitle.setText(AppList.get(position).getLabel());
-        myThreatLevel.setText(AppList.get(position).getThreatDescription());
-        row.setBackgroundColor(AppList.get(position).getThreatColor());
-        myTitle.setTextColor(context.getResources().getColor(R.color.no_threat_text));
-        myThreatLevel.setTextColor(context.getResources().getColor(R.color.no_threat_text));
+        ImageView myImage = (ImageView) row.findViewById(R.id.applicationListViewImage);
+        TextView myTitle = (TextView) row.findViewById(R.id.applicationListViewName);
+        TextView myThreatLevel = (TextView) row.findViewById(R.id.applicationListViewThreatLevel);
+        ImageView myCameraIcon = (ImageView) row.findViewById(R.id.applicationListViewCameraIcon);
+        View colorView = (View)row.findViewById(R.id.colorView);
 
+        myCameraIcon.setVisibility(filteredApps.get(position).usesCamera()?0:8);
+        myImage.setImageDrawable(filteredApps.get(position).getIcon());
+        myTitle.setText(filteredApps.get(position).getLabel());
+        myThreatLevel.setText(filteredApps.get(position).getThreatDescription());
+        colorView.setBackgroundColor(filteredApps.get(position).getThreatColor());
+        
+   
+        
+       // myTitle.setTextColor(context.getResources().getColor(R.color.noThreatText));
+        //myThreatLevel.setTextColor(context.getResources().getColor(R.color.noThreatText));
         return row;
+    }
+    
+    /**
+     * The filter for the list of applications. Removes applications that do not contain the constraint, case insensitive
+     */
+    @Override
+    public Filter getFilter() {
+
+        Filter filter = new Filter() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            	//filteredApps = (List<Application>)results.values;
+            	Comparator<Application> comparator = new Comparator<Application>() {
+                    @Override
+                    public int compare(Application lhs, Application rhs) {
+                        return rhs.getThreatLevel() - lhs.getThreatLevel();
+                    }
+                };
+
+                Collections.sort((List<Application>)results.values, comparator);
+                clear();
+                filteredApps.clear();
+                for(Application app : (List<Application>)results.values)
+                {
+                	filteredApps.add(app);
+                	add(app);
+                }
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                FilterResults results = new FilterResults();
+                List<Application> filterList = new ArrayList<Application>();
+                
+                for(Application app : appList)
+                {
+                	if(app.getLabel().toLowerCase().contains(constraint.toString().toLowerCase()))
+                	{
+                		filterList.add(app);
+                	}
+                }
+                results.count = filterList.size();
+                results.values = filterList;
+
+                return results;
+            }
+        };
+
+        return filter;
     }
 }

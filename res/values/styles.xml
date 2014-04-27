@@ -3,34 +3,34 @@
     <style name="title">
         <item name="android:layout_width">fill_parent</item>
        	<item name="android:layout_height">wrap_content</item>
-       	<item name="android:textColor">@color/text_light</item>
-       	<item name="android:textSize">18dp</item>
+       	<item name="android:textColor">@color/textLight</item>
+       	<item name="android:textSize">14sp</item>
        	<item name="android:textStyle">bold</item>
        	<item name="android:layout_marginLeft">12dp</item>
        	<item name="android:layout_marginTop">8dp</item>
        	<item name="android:layout_marginBottom">8dp</item>
     </style>
-    <style name="normal_text">
+    <style name="normalText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_dark</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/textDark</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>
-    <style name="permission_titles">
+    <style name="permissionTitles">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_light</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>
-    <style name="permission_text">
+    <style name="permissionText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_light</item>
-        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="background_dark">#222222</color>
-	<color name="background_light">#FFFFFF</color>
-	<color name="background_tab">#333333</color> 
-	<color name="text_dark">#2D2D2D</color>
-    <color name="text_light">#FFFFFF</color>
-    <color name="text_tab">#999999</color>
-    <color name="text_tab_selected">#FFFFFF</color>
+	<color name="backgroundDark">#222222</color>
+	<color name="backgroundLight">#FFFFFF</color>
+	<color name="backgroundTab">#333333</color> 
+	<color name="textDark">#2D2D2D</color>
+    <color name="textLight">#FFFFFF</color>
+    <color name="textTab">#999999</color>
+    <color name="textTab_selected">#FFFFFF</color>
     <color name="verified">#6AA84F</color>
-    <color name="no_threat">#FFFFFF</color>
-    <color name="low_threat">#F1C232</color>
-    <color name="med_threat">#F19138</color>
-    <color name="high_threat">#CC4125</color>
-    <color name="no_threat_text">#000000</color>
+    <color name="noThreat">#FFFFFF</color>
+    <color name="lowThreat">#F1C232</color>
+    <color name="medThreat">#F19138</color>
+    <color name="highThreat">#CC4125</color>
+    <color name="noThreatText">#000000</color>
 </resources>
