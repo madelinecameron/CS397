@@ -12,7 +12,7 @@
    android:anyDensity="true" />
      <uses-permission android:name="android.permission.INTERNET" /> 
     <application android:label="@string/appName" android:icon="@drawable/icon" android:allowBackup="true">
-        <activity android:name=".MainActivity"
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"
                   android:label="@string/appName" android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
