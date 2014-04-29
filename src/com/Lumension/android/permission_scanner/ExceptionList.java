@@ -25,11 +25,6 @@ import android.util.Xml;
  *
  */
 abstract class ExceptionList extends Activity {
-
-	/**
-	 * Single Instance of the {@link ExceptionList}
-	 *
-	public static ApplicationExceptionList instance = null;
 	
 	/**
 	 * 	The hash table containing all {@link ListEntry} for the lists
@@ -37,17 +32,6 @@ abstract class ExceptionList extends Activity {
 	private static Map<String,ListEntry> list;
 	
 	public static final String EXLISTFILENAME = "ExList.xml";
-	
-	/**
-	 * Get the singleton ApplicationExceptionList instance and create it if it doesn't exist.
-	 * 
-	 * @return {@link ExceptionList} singleton
-	 *
-	public static ApplicationExceptionList getInstance(){
-		if(instance == null)
-            instance = new ApplicationExceptionList();
-        return instance;
-	}
 	
 	/**
 	 * Adds the specified application to the list.
