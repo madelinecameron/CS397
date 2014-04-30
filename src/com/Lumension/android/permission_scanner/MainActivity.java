@@ -3,6 +3,7 @@ package com.Lumension.android.permission_scanner;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -64,6 +65,14 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         }
         
         appDetailsFrag = (ApplicationDetailFragment)getSupportFragmentManager().findFragmentById(R.id.mainDetailFragment);
+        if(appDetailsFrag == null)
+        {
+        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        else
+        {
+        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
     }
 
     /**
