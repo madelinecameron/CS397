@@ -327,7 +327,10 @@ public class Application {
         }
         
         //reduces security rating based on app store rating
-        threat -= (this.getStars() - 2.5) * 10;
+        if(this.getStars() != 0)
+        {
+        	threat -= (this.getStars() - 2.5) * 10;
+        }
         
         //adds security rating based on number of downloads
         
