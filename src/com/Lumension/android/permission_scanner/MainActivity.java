@@ -1,8 +1,10 @@
 package com.Lumension.android.permission_scanner;
 
 import android.app.SearchManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -64,6 +66,12 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         }
         
         appDetailsFrag = (ApplicationDetailFragment)getSupportFragmentManager().findFragmentById(R.id.mainDetailFragment);
+        
+        ContentResolver cr = getContentResolver();
+        PackageManager pm = getApplication().getPackageManager();
+        
+        SystemSecurity sysSec = new SystemSecurity(cr, pm);
+        sysSec.Calculate();
     }
 
     /**

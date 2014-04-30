@@ -26,8 +26,6 @@ public class ApplicationListFragment extends Fragment {
 		 PackageManager pm = getActivity().getPackageManager();
 	     ApplicationList.getInstance(pm);
 
-	     
-
 	     applicationListView = (ListView) view.findViewById(R.id.applicationListView);
 	     adapter = new ApplicationViewAdapter(getActivity(), ApplicationList.appList);
 	     

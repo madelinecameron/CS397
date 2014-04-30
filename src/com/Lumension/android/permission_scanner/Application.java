@@ -253,7 +253,7 @@ public class Application {
      */
     public int getThreatColor() {
         int color = 0xFF000000;
-        if(threatLevel>50)
+        if(threatLevel > 50)
             color += (0xFF0000 - 0x100*(int)(0xFF*((float)(threatLevel-50)/50)));
         else
             color += (0xFF00 + 0x10000*(int)(0xFF*((float)threatLevel/50)));
