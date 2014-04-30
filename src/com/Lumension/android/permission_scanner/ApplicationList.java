@@ -6,7 +6,13 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
+
+import org.json.JSONObject;
 
 /** A singleton class that contains list of application objects with information about each app
  *
@@ -92,6 +98,32 @@ public class ApplicationList {
                     } catch (Exception except) {
                         Log.e("lumension", except.getMessage());
                     }
+                    
+                    try
+                    {
+                    String requestURL = "https://42matters.com/api/1/apps/lookup.json?access_token=bc705f826e167523abd9609760f43539bf1e56d3&p="+applicationToAdd.getName();
+                    URL googlePlayRequest = new URL(requestURL);
+                    URLConnection connection = googlePlayRequest.openConnection();  
+                    connection.setDoOutput(true); 
+                    
+                    BufferedReader streamReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8")); 
+                    StringBuilder responseStrBuilder = new StringBuilder();
+
+                    String inputStr;
+                    while ((inputStr = streamReader.readLine()) != null)
+                        responseStrBuilder.append(inputStr);
+                    
+                    JSONObject json = new JSONObject(responseStrBuilder.toString());
+                    
+                    applicationToAdd.setDownloadDescription(json.getString("downloads"));
+                    applicationToAdd.setStars((float)json.getDouble("rating"));
+   
+                    }
+                    catch(Exception ex)
+                    {
+                    	ex.printStackTrace();
+                    }
+                    
                     applicationToAdd.setThreatLevel(applicationToAdd.calculateThreat());
                     appList.add(applicationToAdd);
                     alreadyAdded.add(packageName);

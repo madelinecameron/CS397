@@ -264,6 +264,7 @@ public class Application {
      *
      * @return The threat level associated with this app
      */
+    
     public int calculateThreat() {
         int threat = 0;
 
@@ -287,55 +288,102 @@ public class Application {
         }
         for (String p : permissions) {
             if (p.equals("Internet")) {
-                threat += 33;
-            }
-            else if (p.equals("Call phone")) {
-                threat += 30;
-            }
-            else if (p.equals("Send sms")) {
-                threat += 30;
-            }
-            else if (p.equals("Receive sms")) {
-                threat += 30;
-            }
-            else if (p.equals("Read sms")) {
-                threat += 30;
-            }
-            else if (p.equals("Write sms")) {
-                threat += 25;
-            }
-            else if (p.equals("Vibrate")) {
                 threat += 10;
             }
+            else if (p.equals("Call phone")) {
+                threat += 9;
+            }
+            else if (p.equals("Send sms")) {
+                threat += 7;
+            }
+            else if (p.equals("Receive sms")) {
+                threat += 7;
+            }
+            else if (p.equals("Read sms")) {
+                threat += 5;
+            }
+            else if (p.equals("Write sms")) {
+                threat += 6;
+            }
+            else if (p.equals("Vibrate")) {
+                threat += 2;
+            }
             else if (p.equals("Access course location")) {
-                threat += 18;
+                threat += 7;
             }
             else if (p.equals("Access fine location")) {
-                threat += 18;
+                threat += 8;
             }
             else if (p.equals("Write external storage")) {
-                threat += 20;
+                threat += 2;
             }
             else if (p.equals("Read contacts")) {
-                threat += 22;
+                threat += 5;
             }
             else if (p.equals("Write contacts")) {
-                threat += 22;
+                threat += 6;
             }
-            else {threat += 2;}
+            else {threat += 1;}
         }
+        
+        //reduces security rating based on app store rating
+        if(this.getStars() != 0)
+        {
+        	threat -= (this.getStars() - 2.5) * 10;
+        }
+        
+        //adds security rating based on number of downloads
+        
+        //convert download string to an int (takes first part of range)
+        String downloadString = this.getDownloadDescription();
+        char[] downloadCString = downloadString.toCharArray();
+        char[] downloadNumber;
+        downloadNumber = new char[downloadCString.length];
+        downloadNumber[0] = '\0';
+        int corrector = 0;
+        for(int downloadCounter = 0; downloadCounter < downloadCString.length; downloadCounter++)
+        {
+          if(downloadCString[downloadCounter] == '\0')
+          {
+        	downloadNumber[downloadCounter - corrector] = downloadCString[downloadCounter];
+            break;
+          }
+          if(downloadCString[downloadCounter] == '0' || downloadCString[downloadCounter] == '1' ||
+             downloadCString[downloadCounter] == '2' || downloadCString[downloadCounter] == '3' ||
+             downloadCString[downloadCounter] == '4' || downloadCString[downloadCounter] == '5' ||
+             downloadCString[downloadCounter] == '6' || downloadCString[downloadCounter] == '7' ||
+             downloadCString[downloadCounter] == '8' || downloadCString[downloadCounter] == '9' )
+          {
+            downloadNumber[downloadCounter - corrector] = downloadCString[downloadCounter];
+          }
+          else if(downloadCString[downloadCounter] == ',')
+          {
+            corrector++;
+          }
+          else 
+          {
+        	  downloadNumber[downloadCounter - corrector] = '\0';
+        	  break;
+          }
+        }
+        String downloadFinal = new String(downloadNumber);
+        int downloadInt = Integer.parseInt(downloadFinal.trim());
+
+        //now I run it through the rating formula
+        threat += 100 - 200/(3.1415926535) * Math.atan(downloadInt/5000);
+                
         if (threat > 100) {
             threat = 100;
         }
-        if (threat == 0) {
+        if (threat <= 0) {
             threat = 1; // Distinguishes from white listed apps
-        }
+        } 
         if(this.getThreatDescription().equals("")) {
-            if(threat > 70)
+            if(threat > 75)
                 this.setThreatDescription("Risk Level: High");
             else if(threat > 50)
                 this.setThreatDescription("Risk Level: Moderate");
-            else if(threat > 20)
+            else if(threat > 25)
                 this.setThreatDescription("Risk Level: Low");
             else
                 this.setThreatDescription("Risk Level: Minimal");

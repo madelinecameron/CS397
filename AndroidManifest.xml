@@ -10,6 +10,7 @@
    android:normalScreens="true"
    android:smallScreens="true"
    android:anyDensity="true" />
+     <uses-permission android:name="android.permission.INTERNET" /> 
     <application android:label="@string/appName" android:icon="@drawable/icon" android:allowBackup="true">
         <activity android:name=".MainActivity"
                   android:label="@string/appName" android:theme="@style/Theme.AppCompat">

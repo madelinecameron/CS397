@@ -5,3 +5,5 @@ out/*
 .settings/*
 .metadata/*
 .classpath
+.classpath
+project.properties

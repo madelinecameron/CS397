@@ -9,6 +9,9 @@ package com.Lumension.android.permission_scanner;
 
 import android.graphics.Color;
 import java.util.ArrayList;
+//import java.awt.Color;
+import java.util.List;
+
 
 public class SecurityRating {
 	public Color ratingColor;
