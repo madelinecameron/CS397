@@ -4,4 +4,9 @@
     <string name="appIcon">Application Icon</string>
     <string name="cameraIcon">Camera Icon</string>
     <string name="manageButton">Manage</string>
+    <string name="addBlacklist">Add to Blacklist</string>
+    <string name="addWhitelist">Add to Whitelist</string>
+    <string name="removeBlacklist">Remove from Blacklist</string>
+    <string name="removeWhitelist">Remove from Whitelist</string>
+    <string name="filter">Filter</string>
 </resources>

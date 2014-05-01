@@ -1,10 +1,15 @@
 package com.Lumension.android.permission_scanner;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.Lumension.android.permission_scanner.ApplicationExceptionList;
+import com.Lumension.android.permission_scanner.ListEntry;
+import com.Lumension.android.permission_scanner.ListType;
 
 /** A basic container object that contains information on a specific app
  *
@@ -253,6 +258,17 @@ public class Application {
      */
     public int getThreatColor() {
         int color = 0xFF000000;
+        
+        if(threatLevel == -1)
+        {
+        	return Color.WHITE;
+        }
+        
+        if(threatLevel == Integer.MAX_VALUE)
+        {
+        	return Color.GRAY;
+        }
+        
         if(threatLevel > 50)
             color += (0xFF0000 - 0x100*(int)(0xFF*((float)(threatLevel-50)/50)));
         else
@@ -268,23 +284,19 @@ public class Application {
     public int calculateThreat() {
         int threat = 0;
 
-        if(UpdateDB.getInstance().findList(this) == DBEntry.LISTED.BLACK) {
-            this.setThreatDescription("Known malicious application!");
-            return 100;
-        }
-        else if(UpdateDB.getInstance().findList(this) == DBEntry.LISTED.WHITE) {
-            this.setThreatDescription("Trusted application");
-            return 0;
-        }
-        List<Pair<Integer, String>> updateList = UpdateDB.getInstance().checkForUpdates(this);
-        if(updateList != null && !(updateList.isEmpty())) {
-            for(Pair<Integer, String> update : updateList) {
-                threat += update.first;
-            }
-            if(threat > 50)
-                this.setThreatDescription("Missing critical updates");
-            else
-                this.setThreatDescription("Missing updates");
+        @SuppressWarnings("unchecked")
+		ListEntry<String> entry = (ListEntry<String>)ApplicationExceptionList.getInstance().findEntry(name);
+        
+        if(entry != null)
+        {
+        	if(entry.getEntryValue().equals(ListType.BLACKLIST))
+        	{
+        		return Integer.MAX_VALUE;
+        	}
+        	else
+        	{
+        		return -1;
+        	}
         }
         for (String p : permissions) {
             if (p.equals("Internet")) {

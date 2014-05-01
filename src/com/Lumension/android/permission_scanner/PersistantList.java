@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +25,12 @@ import android.util.Xml;
  * @author Derek Allen
  *
  */
-abstract class PersistantList<T> extends Activity {
+abstract class PersistantList<T> {
 	
 	/**
 	 * 	The hash table containing all {@link ListEntry} for the lists
 	 */
-	private static Map<String,ListEntry<?>> list;
+	private static Map<String,ListEntry<?>> list =  new HashMap<String,ListEntry<?>>();
 	
 	public static final String EXLISTFILENAME = "ExList.xml";
 	
@@ -96,10 +97,10 @@ abstract class PersistantList<T> extends Activity {
 	 * @return True if the load was successful, False if the load failed due to an exception.
 	 * If false is returned, the current state of list is invalid.
 	 */
-	public boolean loadFromMemory()
+	public boolean loadFromMemory(Activity loader)
 	{
 		try {
-			FileInputStream fis = openFileInput(EXLISTFILENAME);
+			FileInputStream fis = loader.openFileInput(EXLISTFILENAME);
 			XmlPullParser parser = Xml.newPullParser();
 			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(fis, null);
@@ -152,10 +153,10 @@ abstract class PersistantList<T> extends Activity {
 	 *   
 	 * @return True if the save is successful, false if the save failed. If false is returned, the file containing the list in memory is invalid
 	 */
-	public boolean saveToMemory()
+	public boolean saveToMemory(Activity saver)
 	{
 		try {
-			FileOutputStream fos = openFileOutput(EXLISTFILENAME, Context.MODE_PRIVATE);
+			FileOutputStream fos = saver.openFileOutput(EXLISTFILENAME, Context.MODE_PRIVATE);
 			XmlSerializer xmlSerializer = Xml.newSerializer();
 			StringWriter writer = new StringWriter();
 			xmlSerializer.setOutput(writer);

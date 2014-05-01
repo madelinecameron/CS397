@@ -41,6 +41,7 @@ public class ApplicationDetailFragment extends Fragment implements OnClickListen
 	private View view;
 	
 	private Application thisApp;
+
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -79,6 +80,15 @@ public class ApplicationDetailFragment extends Fragment implements OnClickListen
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.application_details_list_item, testList);
         applicationDetailListView.setAdapter(arrayAdapter);
+    }
+    
+    /**
+     * Gets the Application currently being displayed
+     * @return  The Application currently being displayed
+     */
+    public Application getLoadedApplication()
+    {
+    	return thisApp;
     }
 
     /**

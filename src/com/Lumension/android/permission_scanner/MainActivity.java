@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,6 +36,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
 
     /** Local UpdateDB object instance */
     UpdateDB updateDB;
+    Menu menu;
 
 
     /** Called when the activity is first created.
@@ -50,7 +52,9 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
-
+        
+        ApplicationExceptionList.getInstance().loadFromMemory(this);
+        
         UpdateDB.getInstance().addEntry("com.android.gesture.builder", DBEntry.LISTED.BLACK);
         UpdateDB.getInstance().addEntry("com.example.android.apis", DBEntry.LISTED.WHITE);
         UpdateDB.getInstance().addEntry("com.nordicusability.jiffy", DBEntry.LISTED.WHITE);
@@ -93,6 +97,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
     	 if(appDetailsFrag != null)
     	 {
     		 appDetailsFrag.loadApplication(((Application)parent.getAdapter().getItem(position)).getIndex());
+    		 setMenuFromApplication();
     	 }
     	 else
     	 {
@@ -109,13 +114,14 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
     public boolean onCreateOptionsMenu(Menu menu) {
      getMenuInflater().inflate(R.menu.main, menu);
      SearchManager searchManager = (SearchManager) getSystemService( Context.SEARCH_SERVICE );
-           SearchView searchView = (SearchView) menu.findItem(R.id.menuFilter).getActionView();
+     SearchView searchView = (SearchView) menu.findItem(R.id.menuFilter).getActionView();
     
-           searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-           searchView.setSubmitButtonEnabled(true);
-           searchView.setOnQueryTextListener(this);
-    
-           return super.onCreateOptionsMenu(menu);
+     searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+     searchView.setSubmitButtonEnabled(true);
+     searchView.setOnQueryTextListener(this);
+     this.menu = menu;
+     
+     return super.onCreateOptionsMenu(menu);
     }
     
     /**
@@ -134,5 +140,62 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
     @Override
     public boolean onQueryTextSubmit(String query) {
      return false;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+        case R.id.blacklistAddMenuItem:
+            ApplicationExceptionList.getInstance().addEntry(appDetailsFrag.getLoadedApplication().getName(),ListType.BLACKLIST);
+            setMenuFromApplication();
+            ApplicationExceptionList.getInstance().saveToMemory(this);
+            return true;
+        case R.id.blacklistRemoveMenuItem:
+        	ApplicationExceptionList.getInstance().removeEntry(appDetailsFrag.getLoadedApplication().getName());
+        	setMenuFromApplication();
+        	ApplicationExceptionList.getInstance().saveToMemory(this);
+        	return true;
+        case R.id.whitelistAddMenuItem:
+        	ApplicationExceptionList.getInstance().addEntry(appDetailsFrag.getLoadedApplication().getName(),ListType.WHITELIST);
+        	setMenuFromApplication();
+        	ApplicationExceptionList.getInstance().saveToMemory(this);
+        	return true;
+        case R.id.whitelistRemoveMenuItem:
+        	ApplicationExceptionList.getInstance().removeEntry(appDetailsFrag.getLoadedApplication().getName());
+        	setMenuFromApplication();
+        	ApplicationExceptionList.getInstance().saveToMemory(this);
+        	return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    private void setMenuFromApplication()
+    {
+    	if(appDetailsFrag != null && appDetailsFrag.getLoadedApplication() != null)
+    	{
+    	@SuppressWarnings("unchecked")
+		ListEntry<String> entry = (ListEntry<String>)(ApplicationExceptionList.getInstance().findEntry(appDetailsFrag.getLoadedApplication().getName()));
+    	
+    	((MenuItem)menu.findItem(R.id.whitelistRemoveMenuItem)).setVisible(false);
+    	((MenuItem)menu.findItem(R.id.blacklistRemoveMenuItem)).setVisible(false);
+    	((MenuItem)menu.findItem(R.id.blacklistAddMenuItem)).setVisible(false);
+		((MenuItem)menu.findItem(R.id.whitelistAddMenuItem)).setVisible(false);
+		 if(entry != null && (entry.getEntryValue().equals(ListType.WHITELIST) || entry.getEntryValue().equals(ListType.BLACKLIST)))
+		 {
+			 if(entry.getEntryValue().equals(ListType.WHITELIST))
+			 {
+				 ((MenuItem)menu.findItem(R.id.whitelistRemoveMenuItem)).setVisible(true);
+			 }
+			 else
+			 {
+				 ((MenuItem)menu.findItem(R.id.blacklistRemoveMenuItem)).setVisible(true);
+			 }
+		 }
+		 else
+		 {
+			 ((MenuItem)menu.findItem(R.id.blacklistAddMenuItem)).setVisible(true);
+			 ((MenuItem)menu.findItem(R.id.whitelistAddMenuItem)).setVisible(true);
+		 }
+    }
     }
 }

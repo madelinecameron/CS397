@@ -6,4 +6,28 @@
     android:id="@+id/menuFilter" 
     permission_scanner:showAsAction="ifRoom">
 </item>
+<item
+    android:id="@+id/blacklistAddMenuItem"
+    android:title="@string/addBlacklist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
+<item
+    android:id="@+id/whitelistAddMenuItem"
+    android:title="@string/addWhitelist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
+<item
+    android:id="@+id/blacklistRemoveMenuItem"
+    android:title="@string/removeBlacklist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
+<item
+    android:id="@+id/whitelistRemoveMenuItem"
+    android:title="@string/removeWhitelist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
 </menu>
