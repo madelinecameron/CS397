@@ -31,11 +31,6 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 
 public class MainActivity extends ActionBarActivity implements OnItemClickListener,OnQueryTextListener {
-    /** Local ApplicationList object instance*/
-    
-
-    /** Local UpdateDB object instance */
-    UpdateDB updateDB;
     Menu menu;
 
 
@@ -54,15 +49,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         setContentView(R.layout.main);
         
         ApplicationExceptionList.getInstance().loadFromMemory(this);
-        
-        UpdateDB.getInstance().addEntry("com.android.gesture.builder", DBEntry.LISTED.BLACK);
-        UpdateDB.getInstance().addEntry("com.example.android.apis", DBEntry.LISTED.WHITE);
-        UpdateDB.getInstance().addEntry("com.nordicusability.jiffy", DBEntry.LISTED.WHITE);
-        UpdateDB.getInstance().addEntry("com.android.widgetpreview", 17, 0, "Cosmetic update");
-        UpdateDB.getInstance().addEntry("com.android.widgetpreview", 18, 30, "Security update");
-        UpdateDB.getInstance().addEntry("com.android.smoketest", 18, 100, "Critical update");
 
-        updateDB = UpdateDB.getInstance();
         
         appListFrag = (ApplicationListFragment)getSupportFragmentManager().findFragmentById(R.id.singleFragment);
         if(appListFrag == null)
@@ -135,7 +122,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
     }
     
     /**
-     * Not used, overriden as a requirement for the OnQueryListener class, but submission is not used
+     * Not used, overridden as a requirement for the OnQueryListener class, but submission is not used
      */
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -143,26 +130,46 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
     }
     
     @Override
+	protected void onResume()
+	{
+    	super.onResume();
+    	try
+    	{
+    		appListFrag.resetList();
+    	}
+    	catch(Exception e)
+    	{}
+	}
+    
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
         case R.id.blacklistAddMenuItem:
             ApplicationExceptionList.getInstance().addEntry(appDetailsFrag.getLoadedApplication().getName(),ListType.BLACKLIST);
             setMenuFromApplication();
+            appDetailsFrag.getLoadedApplication().setThreatLevel(appDetailsFrag.getLoadedApplication().calculateThreat());
+            appListFrag.resetList();
             ApplicationExceptionList.getInstance().saveToMemory(this);
             return true;
         case R.id.blacklistRemoveMenuItem:
         	ApplicationExceptionList.getInstance().removeEntry(appDetailsFrag.getLoadedApplication().getName());
         	setMenuFromApplication();
+        	appDetailsFrag.getLoadedApplication().setThreatLevel(appDetailsFrag.getLoadedApplication().calculateThreat());
+        	appListFrag.resetList();
         	ApplicationExceptionList.getInstance().saveToMemory(this);
         	return true;
         case R.id.whitelistAddMenuItem:
         	ApplicationExceptionList.getInstance().addEntry(appDetailsFrag.getLoadedApplication().getName(),ListType.WHITELIST);
         	setMenuFromApplication();
+        	appDetailsFrag.getLoadedApplication().setThreatLevel(appDetailsFrag.getLoadedApplication().calculateThreat());
+        	appListFrag.resetList();
         	ApplicationExceptionList.getInstance().saveToMemory(this);
         	return true;
         case R.id.whitelistRemoveMenuItem:
         	ApplicationExceptionList.getInstance().removeEntry(appDetailsFrag.getLoadedApplication().getName());
         	setMenuFromApplication();
+        	appDetailsFrag.getLoadedApplication().setThreatLevel(appDetailsFrag.getLoadedApplication().calculateThreat());
+        	appListFrag.resetList();
         	ApplicationExceptionList.getInstance().saveToMemory(this);
         	return true;
         }

@@ -24,6 +24,7 @@ public class ApplicationListFragment extends Fragment {
 	ListView applicationListView;
 	ApplicationViewAdapter adapter;
 	ProgressDialog dialog;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.application_list_fragment,container, false);
@@ -58,6 +59,14 @@ public class ApplicationListFragment extends Fragment {
 		     applicationListView.setAdapter(adapter);
 	    }
 
+	}
+	
+	/**
+	 * Resorts the list, recreating all of the lines in the list
+	 */
+	public void resetList()
+	{
+		((ApplicationViewAdapter)applicationListView.getAdapter()).rebuildList();
 	}
 
 	/**

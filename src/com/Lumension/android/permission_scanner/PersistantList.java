@@ -97,6 +97,7 @@ abstract class PersistantList<T> {
 	 * @return True if the load was successful, False if the load failed due to an exception.
 	 * If false is returned, the current state of list is invalid.
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean loadFromMemory(Activity loader)
 	{
 		try {
@@ -104,29 +105,22 @@ abstract class PersistantList<T> {
 			XmlPullParser parser = Xml.newPullParser();
 			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(fis, null);
-            parser.nextTag();
             while (parser.next() != XmlPullParser.END_TAG) {
             	parser.require(XmlPullParser.START_TAG, null, "ListEntry");
             	parser.nextTag();
             	parser.require(XmlPullParser.START_TAG, null, "entryName");
-            	String entryName = parser.getText();
-            	parser.nextTag();
-            	parser.require(XmlPullParser.END_TAG, null, "entryName");
+            	String entryName = parser.nextText();
             	parser.nextTag();
             	parser.require(XmlPullParser.START_TAG, null, "entryList");
             	T entryValue;
+            	String text = parser.nextText();
             	try
             	{
-            		entryValue = (T) (Integer) Integer.parseInt(parser.getText());
+            		entryValue = (T) (Integer) Integer.parseInt(text);
             	}catch (NumberFormatException nfe)  
             	{
-            		entryValue = (T) parser.getText();
+            		entryValue = (T)text;
             	}
-            	parser.nextTag();
-            	parser.require(XmlPullParser.END_TAG, null, "entryList");
-            	parser.nextTag();
-            	parser.require(XmlPullParser.END_TAG, null, "ListEntry");
-            	parser.nextTag();
             	list.put(entryName, new ListEntry<Object>(entryName, entryValue));
             }
             fis.close();

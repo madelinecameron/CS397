@@ -34,6 +34,7 @@ public class ApplicationList {
 
     /** The list of each application object */
     public static List<Application> appList;
+    
 
     /** Gets the ApplicationList instance
      *
@@ -121,7 +122,7 @@ public class ApplicationList {
                     }
                     catch(Exception ex)
                     {
-                    	ex.printStackTrace();
+                    	//ex.printStackTrace();
                     }
                     
                     applicationToAdd.setThreatLevel(applicationToAdd.calculateThreat());

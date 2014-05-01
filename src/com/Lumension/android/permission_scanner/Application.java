@@ -264,7 +264,7 @@ public class Application {
         	return Color.WHITE;
         }
         
-        if(threatLevel == Integer.MAX_VALUE)
+        if(threatLevel == Integer.MAX_VALUE/2)
         {
         	return Color.GRAY;
         }
@@ -291,10 +291,12 @@ public class Application {
         {
         	if(entry.getEntryValue().equals(ListType.BLACKLIST))
         	{
-        		return Integer.MAX_VALUE;
+        		this.setThreatDescription("Risk Level: Blacklisted");
+        		return Integer.MAX_VALUE/2;
         	}
         	else
         	{
+        		this.setThreatDescription("Risk Level: Whitelisted");
         		return -1;
         	}
         }

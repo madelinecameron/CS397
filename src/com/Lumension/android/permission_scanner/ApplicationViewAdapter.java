@@ -50,6 +50,14 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application> implements
        
         
         filteredApps = new ArrayList<Application>();
+        rebuildList();
+    }
+    
+    public void rebuildList()
+    {
+    	clear();
+    	filteredApps = new ArrayList<Application>();
+        filteredApps.clear();
         for(Application app : appList)
         {
         	filteredApps.add(app);
@@ -64,11 +72,11 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application> implements
 
         Collections.sort(filteredApps, comparator);
         
-        for(Application app : appList)
+        for(Application app : filteredApps)
         {
         	add(app);
         }
-        notifyDataSetChanged();
+    	
     }
 
     /** Get the Application object at the requested position
@@ -109,7 +117,7 @@ public class ApplicationViewAdapter extends ArrayAdapter<Application> implements
         
    
         
-       // myTitle.setTextColor(context.getResources().getColor(R.color.noThreatText));
+        //myTitle.setTextColor(context.getResources().getColor(R.color.noThreatText));
         //myThreatLevel.setTextColor(context.getResources().getColor(R.color.noThreatText));
         return row;
     }
