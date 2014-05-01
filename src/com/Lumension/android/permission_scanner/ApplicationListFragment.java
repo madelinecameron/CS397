@@ -36,7 +36,16 @@ public class ApplicationListFragment extends Fragment {
 	}
 	
 	class RetreiveListTask extends AsyncTask<View, Void, View> {
-
+	    applicationListView = (ListView) view.findViewById(R.id.applicationListView);
+	    adapter = new ApplicationViewAdapter(getActivity(), ApplicationList.appList);
+	     
+	    if(getActivity() instanceof OnItemClickListener)
+	    {
+	    	applicationListView.setOnItemClickListener((OnItemClickListener)getActivity());
+	    }
+	    applicationListView.setAdapter(adapter);
+	    return view;
+	     
 	    protected View doInBackground(View... params) {
 	    	
 	    	PackageManager pm = getActivity().getPackageManager();
@@ -58,6 +67,7 @@ public class ApplicationListFragment extends Fragment {
 		     applicationListView.setAdapter(adapter);
 	    }
 
+>>>>>>> c18447ac2c3d9c482e066c0071869da60fbaa12f
 	}
 	
 	/**

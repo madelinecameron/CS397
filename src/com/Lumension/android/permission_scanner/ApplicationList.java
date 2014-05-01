@@ -63,9 +63,10 @@ public class ApplicationList {
         PackageInfo packageInfo;
         Drawable icon;
         List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+        
         for(ApplicationInfo applicationInfo : packages){
             system = ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
-            if(!system){
+            if(!system) {
                 packageName = applicationInfo.packageName;
                 try {
                     applicationLabel = packageManager.getApplicationLabel(applicationInfo).toString();
@@ -138,5 +139,9 @@ public class ApplicationList {
      */
     public static Application getApplication(int index) {
         return appList.get(index);
+    }
+    
+    public List<Application> GetApplicationList() {
+    	return appList;
     }
 }
