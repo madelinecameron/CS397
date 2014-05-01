@@ -1,15 +1,15 @@
 package com.Lumension.android.permission_scanner;
 
 /**
- * Class for entries in the Application Exception list. Each instance will represent
- * a application and what list it belongs to.
+ * Class for entries in the persistent lists.
+ * 
  * 
  * @author Derek
  *
  */
-public class ListEntry {
+public class ListEntry<T> {
 	private String entryName;
-	private String entryList;
+	private T entryValue;
 	
 	/**
 	 * Creates an AppListEntry object with the specified parameters
@@ -17,10 +17,10 @@ public class ListEntry {
 	 * @param entryName A string containing the package name of the app this object represents (ex."com.android.gesture.builder").
 	 * @param entryList The list that the app belongs to.
 	 */
-	public ListEntry(String entryName, String entryList)
+	public ListEntry(String entryName, T entryList)
 	{
 		this.entryName = entryName;
-		this.entryList = entryList;
+		this.entryValue = entryList;
 	}
 	
 	/**
@@ -44,22 +44,22 @@ public class ListEntry {
 	}
 	
 	/**
-	 * Getter for entryList
+	 * Getter for entryValue
 	 * 
-	 * @return entryList
+	 * @return entryValue
 	 */
-	public String getEntryList()
+	public T getEntryValue()
 	{
-		return this.entryList;
+		return this.entryValue;
 	}
 	
 	/**
-	 * Setter for entryList
+	 * Setter for entryValue
 	 * 
-	 * @param entryList The new entryList
+	 * @param entryList The new entryValue
 	 */
-	public void setEntryList(String entryList)
+	public void setEntryValue(T entryList)
 	{
-		this.entryList = entryList;
+		this.entryValue = entryList;
 	}
 }

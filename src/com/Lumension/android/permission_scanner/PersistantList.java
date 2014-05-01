@@ -24,12 +24,12 @@ import android.util.Xml;
  * @author Derek Allen
  *
  */
-abstract class ExceptionList extends Activity {
+abstract class PersistantList<T> extends Activity {
 	
 	/**
 	 * 	The hash table containing all {@link ListEntry} for the lists
 	 */
-	private static Map<String,ListEntry> list;
+	private static Map<String,ListEntry<?>> list;
 	
 	public static final String EXLISTFILENAME = "ExList.xml";
 	
@@ -42,7 +42,7 @@ abstract class ExceptionList extends Activity {
 	 */
 	public boolean addEntry(String entryName, String entryList)
 	{
-		ListEntry previous = list.put(entryName, new ListEntry(entryName,entryList));
+		ListEntry<?> previous = list.put(entryName, new ListEntry<Object>(entryName,entryList));
 		if(previous == null)
 		{
 			return false;
@@ -60,7 +60,7 @@ abstract class ExceptionList extends Activity {
 	 */
 	public boolean removeEntry(String entryName)
 	{
-		ListEntry previous = list.remove(entryName);
+		ListEntry<?> previous = list.remove(entryName);
 		if(previous == null)
 		{
 			return false;
@@ -76,7 +76,7 @@ abstract class ExceptionList extends Activity {
 	 * @param entryName The string representing the entry (ex. Application Package Name "com.android.gesture.builder").
 	 * @return The {@link ListEntry} of the specified entry. Null if the entry is not in a list.
 	 */
-	public ListEntry findEntry(String entryName)
+	public ListEntry<?> findEntry(String entryName)
 	{
 		if(list.containsKey(entryName))
 		{
@@ -113,13 +113,20 @@ abstract class ExceptionList extends Activity {
             	parser.require(XmlPullParser.END_TAG, null, "entryName");
             	parser.nextTag();
             	parser.require(XmlPullParser.START_TAG, null, "entryList");
-            	String entryList = parser.getText();
+            	T entryValue;
+            	try
+            	{
+            		entryValue = (T) (Integer) Integer.parseInt(parser.getText());
+            	}catch (NumberFormatException nfe)  
+            	{
+            		entryValue = (T) parser.getText();
+            	}
             	parser.nextTag();
             	parser.require(XmlPullParser.END_TAG, null, "entryList");
             	parser.nextTag();
             	parser.require(XmlPullParser.END_TAG, null, "ListEntry");
             	parser.nextTag();
-            	list.put(entryName, new ListEntry(entryName, entryList));
+            	list.put(entryName, new ListEntry<Object>(entryName, entryValue));
             }
             fis.close();
 		} catch (FileNotFoundException e) {
@@ -153,13 +160,13 @@ abstract class ExceptionList extends Activity {
 			StringWriter writer = new StringWriter();
 			xmlSerializer.setOutput(writer);
 			xmlSerializer.startDocument("UTF-8",true);
-			for(ListEntry value : list.values()){
+			for(ListEntry<?> value : list.values()){
 				xmlSerializer.startTag(null, "ListEntry");
 				xmlSerializer.startTag(null, "entryName");
 				xmlSerializer.text(value.getEntryName());
 				xmlSerializer.endTag(null, "entryName");
 				xmlSerializer.startTag(null, "entryList");
-				xmlSerializer.text(value.getEntryList());
+				xmlSerializer.text(value.getEntryValue().toString());
 				xmlSerializer.endTag(null, "entryList");
 				xmlSerializer.endTag(null, "ListEntry");
 			}
@@ -183,11 +190,11 @@ abstract class ExceptionList extends Activity {
 	 * @param entryList the value of entries to be returned.
 	 * @return The list of entries with the list value specified.
 	 */
-	public List<ListEntry> getList(String entryList)
+	public List<ListEntry<?>> getList(String entryList)
 	{
-		List<ListEntry> entriesInList = new ArrayList<ListEntry>();
-		for (ListEntry value : list.values()) {
-		    if(value.getEntryList() == entryList)
+		List<ListEntry<?>> entriesInList = new ArrayList<ListEntry<?>>();
+		for (ListEntry<?> value : list.values()) {
+		    if(value.getEntryValue() == entryList)
 		    {
 		    	entriesInList.add(value);
 		    }
@@ -201,10 +208,10 @@ abstract class ExceptionList extends Activity {
 	 */
 	public void clearList(String entryList)
 	{
-		for (Iterator<Map.Entry<String,ListEntry>> it = list.entrySet().iterator(); it.hasNext();)
+		for (Iterator<Map.Entry<String,ListEntry<?>>> it = list.entrySet().iterator(); it.hasNext();)
 		{
-			 Map.Entry<String,ListEntry> e = it.next();
-			 if (e.getValue().getEntryList() == entryList) {
+			 Map.Entry<String,ListEntry<?>> e = it.next();
+			 if (e.getValue().getEntryValue() == entryList) {
 				 it.remove();
 			 }
 		}

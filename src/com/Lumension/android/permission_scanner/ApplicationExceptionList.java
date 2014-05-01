@@ -6,7 +6,7 @@ package com.Lumension.android.permission_scanner;
  * @author Derek Allen
  *
  */
-public class ApplicationExceptionList extends ExceptionList {
+public class ApplicationExceptionList extends PersistantList<String> {
 
 	/**
 	 * Single Instance of the {@link ApplicationExceptionList}
@@ -18,7 +18,7 @@ public class ApplicationExceptionList extends ExceptionList {
 	/**
 	 * Get the singleton {@link ApplicationExceptionList} instance and create it if it doesn't exist.
 	 * 
-	 * @return {@link ExceptionList} singleton
+	 * @return {@link PersistantList} singleton
 	 */
 	public static ApplicationExceptionList getInstance(){
 		if(instance == null)
