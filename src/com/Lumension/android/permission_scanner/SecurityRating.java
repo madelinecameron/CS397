@@ -14,44 +14,47 @@ import java.util.List;
 
 
 public class SecurityRating {
-	public Color ratingColor;
-	public int ratingNum;
-	public ArrayList<String> relatedPermissionNames;
-	public int storeRating;
-	public int downloads;
+	private ArrayList<String> reasons = new ArrayList<String>();
+	private int totalApplicatioNRating;
+	private double averageApplicationRating;
+	private int systemRating;
 	
-	/**
-	 * Creates a SecurityRating object using algorithm with the given permissions, 
-	 * app rating(0­5), and number of downloads as inputs.  
-	 * @param relatedPerms permissions of the application
-	 * @param appRating app store rating of the application
-	 * @param numDownloads number of app store downloads
-	 * @return a SecurityRating object
-	 */
-	public SecurityRating Create(ArrayList<String> relatedPerms, int appRating, int numDownloads)
+	public int getTotalApplicatioNRating() {
+		return totalApplicatioNRating;
+	}
+
+	public void setTotalApplicatioNRating(int totalApplicatioNRating) {
+		this.totalApplicatioNRating = totalApplicatioNRating;
+	}
+
+	public double getAverageApplicationRating() {
+		return averageApplicationRating;
+	}
+
+	public void setAverageApplicationRating(double averageApplicationRating) {
+		this.averageApplicationRating = averageApplicationRating;
+	}
+
+	public int getSystemRating() {
+		return systemRating;
+	}
+
+	public void setSystemRating(int systemRating) {
+		this.systemRating = systemRating;
+	}
+
+	public void addReason(String reason)
 	{
-		//Needs Michael's new algorithm
-		return new SecurityRating();
+		reasons.add(reason);
 	}
 	
-	/**
-	 * Creates a SecurityRating object with the 
-	 * given ratingColor, ratingNum and list of permissions.
-	 * </p> 
-	 * Used for overall system security rating and 
-	 * potentially if a different rating algorithm was used / needed
-	 * @param ratingColor color part of the rating
-	 * @param ratingNum numerical part of the rating
-	 * @param relatedPerms permissions used to come to this rating
-	 * @return a SecurityRating object
-	 */
-	public SecurityRating Create(Color ratingColor, int ratingNum, ArrayList<String> relatedPerms)
+	public List<String> getReasons()
 	{
-		this.ratingColor = ratingColor;
-		this.ratingNum = ratingNum;
-		this.relatedPermissionNames = relatedPerms;
-		
-		return this;
+		return reasons;
 	}
 	
+	public int getColor()
+	{
+		return Color.RED;
+	}
 }

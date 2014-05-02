@@ -2,6 +2,8 @@ package com.Lumension.android.permission_scanner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.widget.*;
 import android.provider.Settings;
@@ -27,12 +29,9 @@ import java.util.Map;
  */
 
 public class SystemSecurity extends Activity {
-	private SecurityRating overallSecurity;
 	private static Map<String, Integer> sysSettingsMap = createSysSetMap(); 
 	private static Map<String, Integer> secureSettingsMap = createSecSetMap();
-	private ContentResolver contentResolver;
-	private PackageManager packageManager;
-	private List<Application> appList;
+	private Context context;
 	
 	//All values are completely arbitrary, except for "AIRPLANE_MODE_ON"
 	private static Map<String, Integer> createSysSetMap() { //Credit to Peter Stribrany at http://stackoverflow.com/questions/507602/how-to-initialise-a-static-map-in-java
@@ -59,61 +58,90 @@ public class SystemSecurity extends Activity {
 	/**
 	 *  Calculates the overall system security rating
 	 */
-	public SystemSecurity(ContentResolver contentResolver, PackageManager packageManage) {
-		this.contentResolver = contentResolver;
-		this.packageManager = packageManage;
-		
-		RetrieveApplicationList();
+	public SystemSecurity(Context context) {
+		this.context=context;
 	}
 	
-	public void Calculate() { //Just a preliminary calculation function. Will probably be tweaked later.
+	public SecurityRating Calculate() { //Just a preliminary calculation function. Will probably be tweaked later.
 		Settings.Secure secureSettings = new Settings.Secure();
 		Settings.System sysSettings = new Settings.System();
 		
+		SecurityRating rating = new SecurityRating();
+		
 		int sysSecRating = 0;
 		for(Map.Entry<String, Integer> secSet : sysSettingsMap.entrySet()) {
-			String value = sysSettings.getString(this.contentResolver, secSet.getKey().toLowerCase());
+			String value = sysSettings.getString(context.getContentResolver(), secSet.getKey().toLowerCase());
 			Log.d("TEST", secSet.getKey() + " " + value + " " + String.valueOf(secSet.getValue()));
 			if(value != null) {
  				if(Integer.parseInt(value) == 1) { //Can't be boolean
 					sysSecRating += secSet.getValue();
+					
+					if(secSet.getValue()>0)
+					{
+						rating.addReason("Insecure Setting: "+ secSet.getKey().toLowerCase());
+					}
+					else
+					{
+						rating.addReason("Extra Secure Setting: "+ secSet.getKey().toLowerCase());
+					}
 				}
 			}
 		}
 		
 		for(Map.Entry<String, Integer> secSet : secureSettingsMap.entrySet()) {
-			String value = secureSettings.getString(this.contentResolver, secSet.getKey().toLowerCase());
+			String value = secureSettings.getString(context.getContentResolver(), secSet.getKey().toLowerCase());
 			Log.d("TEST", secSet.getKey() + " " + value + " " + String.valueOf(secSet.getValue()));
 			if(value != null) {
 				if(Integer.parseInt(value) == 1) { //Can't be boolean
 					sysSecRating += secSet.getValue();
+					if(secSet.getValue()>0)
+					{
+						rating.addReason("Insecure Setting: "+ secSet.getKey().toLowerCase());
+					}
+					else
+					{
+						rating.addReason("Extra Secure Setting: "+ secSet.getKey().toLowerCase());
+					}
 				}
 			}
 		}
 		
+		WifiManager wifiMan = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+		
+		for(WifiConfiguration wifi : wifiMan.getConfiguredNetworks())
+		{
+			if(wifi.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.NONE))
+			{
+				sysSecRating += 35;
+				rating.addReason("Unsecured Wifi Network Configured: "+wifi.SSID);
+				
+			}
+		}
+		
+		int appTotal=0;
+		
+		for(Application app : ApplicationList.appList)
+		{
+			if(ApplicationExceptionList.getInstance().findEntry(app.getName()) == null)
+			{
+				appTotal+= app.getThreatLevel();
+			}
+		}
+		
+		rating.setTotalApplicatioNRating(appTotal);
+		rating.setSystemRating(sysSecRating);
+		rating.setAverageApplicationRating(((double)appTotal)/ApplicationList.appList.size());
+	
 		Log.d("TEST", String.valueOf(sysSecRating));
 		
-		for(Application a : appList) {
-			Log.d("TEST", "Threat color: " + String.valueOf((a.getThreatColor() / 1000000) * -1));
-			Log.d("TEST", "Threat level: " + String.valueOf(a.getThreatLevel()));
-			int totalAppThreat = ((a.getThreatColor() / 1000000) * -1) + a.getThreatLevel();
-			sysSecRating += totalAppThreat;
-		}
+		
 		if(sysSecRating < 0)
 			sysSecRating = 0; 
 		
 		Log.d("TEST", String.valueOf(sysSecRating));
-	}
-	
-	/**
-	 * Retrieves list of all applications rated by the app.  
-	 */
-	private void RetrieveApplicationList() {
-		ApplicationList applicationList = ApplicationList.getInstance(this.packageManager);
 		
-		this.appList = applicationList.GetApplicationList();
+		return rating;
 	}
-	
 	/**
 	 * Removes a permission from the list of permissions used to grade overall security level.
 	 * @param permissionName

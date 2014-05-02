@@ -58,7 +58,7 @@ public class Application {
     private String downloadDescription;
     
     /** The rating of the application **/
-    private float stars;
+    private float rating;
 
     /**
      * Gets the download description
@@ -80,16 +80,16 @@ public class Application {
 	 * Gets the application rating
 	 * @return the application rating
 	 */
-	public float getStars() {
-		return stars;
+	public float getRating() {
+		return rating;
 	}
 
 	/**
 	 * Sets the application rating
 	 * @param stars
 	 */
-	public void setStars(float stars) {
-		this.stars = stars;
+	public void setRating(float stars) {
+		this.rating = stars;
 	}
 
 	/** Constructor for the Application object
@@ -301,50 +301,23 @@ public class Application {
         	}
         }
         for (String p : permissions) {
-            if (p.equals("Internet")) {
-                threat += 10;
+            ListEntry<Integer> ent = (ListEntry<Integer>) PermissionRiskValueList.getInstance().findEntry(p);
+            
+            if(ent != null)
+            {
+            	threatLevel+=ent.getEntryValue();
             }
-            else if (p.equals("Call phone")) {
-                threat += 9;
+            else
+            {
+            	threatLevel++;
             }
-            else if (p.equals("Send sms")) {
-                threat += 7;
-            }
-            else if (p.equals("Receive sms")) {
-                threat += 7;
-            }
-            else if (p.equals("Read sms")) {
-                threat += 5;
-            }
-            else if (p.equals("Write sms")) {
-                threat += 6;
-            }
-            else if (p.equals("Vibrate")) {
-                threat += 2;
-            }
-            else if (p.equals("Access course location")) {
-                threat += 7;
-            }
-            else if (p.equals("Access fine location")) {
-                threat += 8;
-            }
-            else if (p.equals("Write external storage")) {
-                threat += 2;
-            }
-            else if (p.equals("Read contacts")) {
-                threat += 5;
-            }
-            else if (p.equals("Write contacts")) {
-                threat += 6;
-            }
-            else {threat += 1;}
         }
         
         //reduces security rating based on app store rating
-        if(this.getStars() != 0)
+        if(this.getRating() != 0)
         {
-        	threat -= (this.getStars() - 2.5) * 10;
-        }
+        	threat -= (this.getRating() - 2.5) * 10;
+        
         
         //adds security rating based on number of downloads
         
@@ -385,6 +358,7 @@ public class Application {
 
         //now I run it through the rating formula
         threat += 100 - 200/(3.1415926535) * Math.atan(downloadInt/5000);
+        }
                 
         if (threat > 100) {
             threat = 100;

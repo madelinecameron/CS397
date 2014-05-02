@@ -84,7 +84,7 @@ public class ApplicationList {
                 }
                 if(!alreadyAdded.contains(packageName)) {
                     applicationToAdd = new Application(applicationLabel, packageName, versionCode, system, icon,appList.size());
-                    applicationToAdd.setStars(0);
+                    applicationToAdd.setRating(0);
                     applicationToAdd.setDownloadDescription("0+");
                     try {
                         packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
@@ -117,7 +117,7 @@ public class ApplicationList {
                     JSONObject json = new JSONObject(responseStrBuilder.toString());
                     
                     applicationToAdd.setDownloadDescription(json.getString("downloads"));
-                    applicationToAdd.setStars((float)json.getDouble("rating"));
+                    applicationToAdd.setRating((float)json.getDouble("rating"));
    
                     }
                     catch(Exception ex)

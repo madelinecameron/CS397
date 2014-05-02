@@ -65,7 +65,7 @@ public class ApplicationDetailFragment extends Fragment implements OnClickListen
         ((TextView)view.findViewById(R.id.applicationDetailThreat)).setText(thisApp.getThreatDescription());
         ((TextView)view.findViewById(R.id.applicationDetailActivityLayout)).setText("Permission Count: " + thisApp.getPermissions().size());
         ((TextView)view.findViewById(R.id.applicationDetailsDownloads)).setText(thisApp.getDownloadDescription()+ " downloads");
-        ((RatingBar)view.findViewById(R.id.applicationDetailsStars)).setRating(thisApp.getStars());
+        ((RatingBar)view.findViewById(R.id.applicationDetailsStars)).setRating(thisApp.getRating());
         ((Button)view.findViewById(R.id.appicationDetailsManage)).setOnClickListener(this);
         
         ((RatingBar)view.findViewById(R.id.applicationDetailsStars)).setVisibility(View.VISIBLE);
