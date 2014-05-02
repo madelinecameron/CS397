@@ -70,9 +70,6 @@ public class SystemSecurity extends Activity {
 		for (Map.Entry<String, Integer> secSet : sysSettingsMap.entrySet()) {
 			String value = System.getString(context.getContentResolver(),
 					secSet.getKey().toLowerCase());
-			Log.d("TEST",
-					secSet.getKey() + " " + value + " "
-							+ String.valueOf(secSet.getValue()));
 			if (value != null) {
 				if (Integer.parseInt(value) == 1) { // Can't be boolean
 					sysSecRating += secSet.getValue();
@@ -92,9 +89,6 @@ public class SystemSecurity extends Activity {
 			String value = Secure
 					.getString(context.getContentResolver(), secSet.getKey()
 							.toLowerCase());
-			Log.d("TEST",
-					secSet.getKey() + " " + value + " "
-							+ String.valueOf(secSet.getValue()));
 			if (value != null) {
 				if (Integer.parseInt(value) == 1) { // Can't be boolean
 					sysSecRating += secSet.getValue();
@@ -134,12 +128,8 @@ public class SystemSecurity extends Activity {
 		rating.setAverageApplicationRating(((double) appTotal)
 				/ ApplicationList.appList.size());
 
-		Log.d("TEST", String.valueOf(sysSecRating));
-
 		if (sysSecRating < 0)
 			sysSecRating = 0;
-
-		Log.d("TEST", String.valueOf(sysSecRating));
 
 		return rating;
 	}
