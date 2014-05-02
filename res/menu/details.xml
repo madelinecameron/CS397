@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:permission_scanner="http://schemas.android.com/apk/res-auto">
+<item permission_scanner:actionViewClass="android.support.v7.widget.SearchView"
+    android:icon="@android:drawable/ic_menu_search" 
+    android:id="@+id/menuFilter" 
+    permission_scanner:showAsAction="ifRoom">
+</item>
+<item
+    android:id="@+id/blacklistDetailsAddMenuItem"
+    android:title="@string/addBlacklist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
+<item
+    android:id="@+id/whitelistDetailsAddMenuItem"
+    android:title="@string/addWhitelist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
+<item
+    android:id="@+id/blacklistDetailsRemoveMenuItem"
+    android:title="@string/removeBlacklist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
+<item
+    android:id="@+id/whitelistDetailsRemoveMenuItem"
+    android:title="@string/removeWhitelist"
+    android:visible="false"
+    permission_scanner:showAsAction="never">
+</item>
+</menu>
