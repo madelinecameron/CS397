@@ -388,7 +388,7 @@ public class Application {
 
 			// now I run it through the rating formula
 			threat += 100 - 200 / (3.1415926535) * Math
-					.atan(downloadInt / 5000);
+					.atan(downloadInt / 1000);
 		}
 
 		if (threat > 100) {
