@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/permissionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30" />
+
+    <com.Lumension.android.permission_scanner.ExtendedEditText
+        android:id="@+id/permissionEditText"
+        android:layout_width="44dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="2" >
+    </com.Lumension.android.permission_scanner.ExtendedEditText>
+
+</LinearLayout>

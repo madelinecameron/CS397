@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:permission_scanner="http://schemas.android.com/apk/res-auto">
+    <item android:title="@string/rescan"
+        android:id="@+id/rescanOption"
+        permission_scanner:icon="@android:drawable/ic_menu_rotate"
+        android:icon="@android:drawable/ic_menu_rotate"
+        permission_scanner:showAsAction="always" android:showAsAction="withText"></item>
+</menu>
