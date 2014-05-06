@@ -171,15 +171,16 @@ public class ApplicationDetailActivity extends ActionBarActivity implements
 			long id) {
 		if (position == 0) {
 			Intent intent = new Intent(getBaseContext(), MainActivity.class);
-			intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivity(intent);
 		}
 		if (position == 1) {
 			Intent intent = new Intent(getBaseContext(),
 					ApplicationRatingsActivity.class);
-			intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivity(intent);
 		}
+		DrawerLayout mDrawerLayout;
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.androidDrawer);
+		mDrawerLayout.closeDrawers();
 	}
 
 }

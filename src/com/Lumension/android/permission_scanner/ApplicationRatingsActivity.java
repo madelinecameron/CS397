@@ -118,17 +118,11 @@ public class ApplicationRatingsActivity extends ActionBarActivity implements
 		if (parent == drawerList) {
 			if (position == 0) {
 				Intent intent = new Intent(getBaseContext(), MainActivity.class);
-				intent.setFlags(intent.getFlags()
-						| Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
 			}
-			if (position == 1) {
-				Intent intent = new Intent(getBaseContext(),
-						ApplicationRatingsActivity.class);
-				intent.setFlags(intent.getFlags()
-						| Intent.FLAG_ACTIVITY_NO_HISTORY);
-				startActivity(intent);
-			}
+			DrawerLayout mDrawerLayout;
+			mDrawerLayout = (DrawerLayout) findViewById(R.id.androidDrawer);
+			mDrawerLayout.closeDrawers();
 		} else {
 			if (appDetailsFrag != null) {
 				appDetailsFrag.loadApplication(((Application) parent
@@ -139,6 +133,8 @@ public class ApplicationRatingsActivity extends ActionBarActivity implements
 						ApplicationDetailActivity.class);
 				intent.putExtra("applicationId", ((Application) parent
 						.getAdapter().getItem(position)).getIndex());
+				intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+				intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
 			}
 		}

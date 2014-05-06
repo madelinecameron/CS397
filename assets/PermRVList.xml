@@ -43,3 +43,15 @@
     <entryName>Write contacts</entryName>
     <entrList>6</entrList>
 </ListEntry>
+<ListEntry>
+    <entryName>Install packages</entryName>
+    <entrList>15</entrList>
+</ListEntry>
+<ListEntry>
+    <entryName>Delete packages</entryName>
+    <entrList>15</entrList>
+</ListEntry>
+<ListEntry>
+    <entryName>Access superuser</entryName>
+    <entrList>50</entrList>
+</ListEntry>

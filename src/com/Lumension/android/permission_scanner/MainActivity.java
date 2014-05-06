@@ -87,13 +87,13 @@ public class MainActivity extends ActionBarActivity implements
 			copyAsset(ApplicationExceptionList.EXLISTFILENAME);
 		}
 
-		try {
-			FileInputStream fis;
-			fis = openFileInput(PermissionRiskValueList.EXLISTFILENAME);
-			fis.close();
-		} catch (Exception e) {
+		//try {
+		//	FileInputStream fis;
+		//	fis = openFileInput(PermissionRiskValueList.EXLISTFILENAME);
+		//	fis.close();
+		//} catch (Exception e) {
 			copyAsset(PermissionRiskValueList.EXLISTFILENAME);
-		}
+		//}
 
 		ApplicationExceptionList.getInstance().loadFromMemory(this);
 		PermissionRiskValueList.getInstance().loadFromMemory(this);
@@ -207,17 +207,14 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (position == 0) {
-			Intent intent = new Intent(getBaseContext(), MainActivity.class);
-			intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-			startActivity(intent);
-		}
 		if (position == 1) {
 			Intent intent = new Intent(getBaseContext(),
 					ApplicationRatingsActivity.class);
-			intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivity(intent);
 		}
+		DrawerLayout mDrawerLayout;
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.androidDrawer);
+		mDrawerLayout.closeDrawers();
 	}
 
 }

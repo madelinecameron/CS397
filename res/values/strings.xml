@@ -13,6 +13,5 @@
     <string-array name="drawerStrings">
         <item>Overall Ratings</item>
         <item>Application Ratings</item>
-        <item>Edit Permissions</item>
     </string-array>
 </resources>
