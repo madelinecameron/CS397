@@ -22,5 +22,6 @@
         </activity>
         <activity android:name =".ApplicationDetailActivity" android:theme="@style/Theme.AppCompat" android:launchMode="singleTop"/>
         <activity android:name =".ApplicationRatingsActivity" android:theme="@style/Theme.AppCompat" android:launchMode="singleTop"/>
+        <activity android:name =".PermissionListActivity" android:theme="@style/Theme.AppCompat" android:launchMode="singleTop"/>
     </application>
 </manifest>

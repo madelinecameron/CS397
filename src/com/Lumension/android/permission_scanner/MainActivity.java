@@ -16,6 +16,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity implements
 		OnItemClickListener {
 
+	boolean refresh = false;
 	/**
 	 * The current rating of the system
 	 */
@@ -87,13 +89,13 @@ public class MainActivity extends ActionBarActivity implements
 			copyAsset(ApplicationExceptionList.getInstance().getFilename());
 		}
 
-		//try {
-		//	FileInputStream fis;
-		//	fis = openFileInput(PermissionRiskValueList.EXLISTFILENAME);
-		//	fis.close();
-		//} catch (Exception e) {
+		try {
+			FileInputStream fis;
+			fis = openFileInput(PermissionRiskValueList.getInstance().getFilename());
+			fis.close();
+		} catch (Exception e) {
 			copyAsset(PermissionRiskValueList.getInstance().getFilename());
-		//}
+		}
 
 		ApplicationExceptionList.getInstance().loadFromMemory(this);
 		PermissionRiskValueList.getInstance().loadFromMemory(this);
@@ -141,12 +143,14 @@ public class MainActivity extends ActionBarActivity implements
 		 * Runs in a separate thread. Runs the actuall system scan
 		 */
 		protected View doInBackground(View... params) {
-
-			if (ApplicationList.appList == null
-					|| ApplicationList.appList.size() != 0) {
-				PackageManager pm = getPackageManager();
-				ApplicationList.getInstance(pm);
+			PackageManager pm = getPackageManager();
+			if(refresh)
+			{
+				ApplicationList.regenerate(pm);
 			}
+
+				ApplicationList.getInstance(pm);
+				
 
 			return params[0];
 
@@ -162,6 +166,7 @@ public class MainActivity extends ActionBarActivity implements
 
 			TextView overallRatingTextBox = (TextView) context
 					.findViewById(R.id.overallRatingTextBox);
+			
 			overallRatingTextBox.setText("Overall Rating: "
 					+ String.valueOf(rating.getSystemRating()
 							+ rating.getTotalApplicationRating()));
@@ -189,13 +194,27 @@ public class MainActivity extends ActionBarActivity implements
 
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main_menu, menu);
+
+		return super.onCreateOptionsMenu(menu);
+	}
+	
 	/**
 	 * Handles the navigation drawer being opened
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (drawerToggle.onOptionsItemSelected(item)) {
-			return true;
+		drawerToggle.onOptionsItemSelected(item);
+		
+		if(item.getItemId() == R.id.rescanOption)
+		{
+			dialog = ProgressDialog.show(this, "", "Scanning System", true);
+			dialog.show();
+			
+			refresh = true;
+			new RetreiveListTask().execute(new View[4]);
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -207,9 +226,18 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		if (position == 0) {
+			Intent intent = new Intent(getBaseContext(), MainActivity.class);
+			startActivity(intent);
+		}
 		if (position == 1) {
 			Intent intent = new Intent(getBaseContext(),
 					ApplicationRatingsActivity.class);
+			startActivity(intent);
+		}
+		if (position == 2) {
+			Intent intent = new Intent(getBaseContext(),
+					PermissionListActivity.class);
 			startActivity(intent);
 		}
 		DrawerLayout mDrawerLayout;

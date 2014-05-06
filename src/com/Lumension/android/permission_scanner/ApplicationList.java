@@ -50,6 +50,12 @@ public class ApplicationList {
 		}
 		return instance;
 	}
+	
+	public static void regenerate(PackageManager pm)
+	{
+		appList.clear();
+		instance = new ApplicationList(pm);
+	}
 
 	/**
 	 * Constructor for the ApplicationList

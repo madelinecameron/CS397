@@ -178,6 +178,11 @@ public class ApplicationDetailActivity extends ActionBarActivity implements
 					ApplicationRatingsActivity.class);
 			startActivity(intent);
 		}
+		if (position == 2) {
+			Intent intent = new Intent(getBaseContext(),
+					PermissionListActivity.class);
+			startActivity(intent);
+		}
 		DrawerLayout mDrawerLayout;
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.androidDrawer);
 		mDrawerLayout.closeDrawers();

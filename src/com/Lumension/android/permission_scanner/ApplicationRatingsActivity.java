@@ -120,6 +120,11 @@ public class ApplicationRatingsActivity extends ActionBarActivity implements
 				Intent intent = new Intent(getBaseContext(), MainActivity.class);
 				startActivity(intent);
 			}
+			if (position == 2) {
+				Intent intent = new Intent(getBaseContext(),
+						PermissionListActivity.class);
+				startActivity(intent);
+			}
 			DrawerLayout mDrawerLayout;
 			mDrawerLayout = (DrawerLayout) findViewById(R.id.androidDrawer);
 			mDrawerLayout.closeDrawers();
@@ -146,7 +151,7 @@ public class ApplicationRatingsActivity extends ActionBarActivity implements
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.application_ratings_menu, menu);
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(R.id.menuFilter)
 				.getActionView();

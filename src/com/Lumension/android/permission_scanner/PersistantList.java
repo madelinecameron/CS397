@@ -81,9 +81,10 @@ abstract class PersistantList<T> {
 	 * @return The {@link ListEntry} of the specified entry. Null if the entry
 	 *         is not in a list.
 	 */
-	public ListEntry<?> findEntry(String entryName) {
+	@SuppressWarnings("unchecked")
+	public ListEntry<T> findEntry(String entryName) {
 		if (list.containsKey(entryName)) {
-			return list.get(entryName);
+			return (ListEntry<T>) list.get(entryName);
 		}
 		return null;
 	}
@@ -103,7 +104,7 @@ abstract class PersistantList<T> {
 	 *         invalid.
 	 */
 	@SuppressWarnings("unchecked")
-	public boolean loadFromMemory(Activity loader) {
+	public boolean loadFromMemory(Context loader) {
 		try {
 			FileInputStream fis = loader.openFileInput(getFilename());
 			XmlPullParser parser = Xml.newPullParser();
@@ -157,7 +158,7 @@ abstract class PersistantList<T> {
 	 *         false is returned, the file containing the list in memory is
 	 *         invalid
 	 */
-	public boolean saveToMemory(Activity saver) {
+	public boolean saveToMemory(Context saver) {
 		try {
 			FileOutputStream fos = saver.openFileOutput(getFilename(),
 					Context.MODE_PRIVATE);
@@ -224,5 +225,24 @@ abstract class PersistantList<T> {
 		}
 	}
 	
+	/**
+	 * Returns a list of all entries in this PersistantList
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ListEntry<T>> getAllEntries()
+	{
+		ArrayList<ListEntry<T>> builtList = new ArrayList<ListEntry<T>>();
+		
+		for(String key : list.keySet())
+		{
+			builtList.add((ListEntry<T>)list.get(key));
+		}
+		return builtList;
+	}
+	
+	/**
+	 * Returns the file name that tracks this persistent list
+	 * @return The file name that tracks this persistent list
+	 */
 	public abstract String getFilename();
 }

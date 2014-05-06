@@ -9,9 +9,17 @@
     <string name="removeBlacklist">Remove from Blacklist</string>
     <string name="removeWhitelist">Remove from Whitelist</string>
     <string name="filter">Filter</string>
+    <string name="rescan">Rescan</string>
+    <string name="addPermission">Add Permission</string>
+    <string name="permissionName">Permission Name:</string>
+    <string name="permissionRisk">Permission Risk:</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    
     
     <string-array name="drawerStrings">
         <item>Overall Ratings</item>
         <item>Application Ratings</item>
+        <item>Edit Permissions</item>
     </string-array>
 </resources>
