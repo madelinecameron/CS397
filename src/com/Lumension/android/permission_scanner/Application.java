@@ -341,9 +341,9 @@ public class Application {
 					.getInstance().findEntry(p);
 
 			if (ent != null) {
-				threatLevel += ent.getEntryValue();
+				threat += ent.getEntryValue();
 			} else {
-				threatLevel++;
+				threat++;
 			}
 		}
 

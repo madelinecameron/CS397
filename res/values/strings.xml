@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="appName">Permission Scanner</string>
+    <string name="appName">Light Droid</string>
     <string name="appIcon">Application Icon</string>
     <string name="cameraIcon">Camera Icon</string>
     <string name="manageButton">Manage</string>

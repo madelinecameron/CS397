@@ -13,8 +13,6 @@ public class PermissionRiskValueList extends PersistantList<Integer> {
 	 */
 	public static PermissionRiskValueList instance = null;
 
-	public static final String EXLISTFILENAME = "PermRVList.xml";
-
 	/**
 	 * Get the singleton {@link PermissionRiskValueList} instance and create it
 	 * if it doesn't exist.
@@ -25,5 +23,10 @@ public class PermissionRiskValueList extends PersistantList<Integer> {
 		if (instance == null)
 			instance = new PermissionRiskValueList();
 		return instance;
+	}
+
+	@Override
+	public String getFilename() {
+		return "PermRVList.xml";
 	}
 }

@@ -81,10 +81,10 @@ public class MainActivity extends ActionBarActivity implements
 
 		try {
 			FileInputStream fis;
-			fis = openFileInput(ApplicationExceptionList.EXLISTFILENAME);
+			fis = openFileInput(ApplicationExceptionList.getInstance().getFilename());
 			fis.close();
 		} catch (Exception e) {
-			copyAsset(ApplicationExceptionList.EXLISTFILENAME);
+			copyAsset(ApplicationExceptionList.getInstance().getFilename());
 		}
 
 		//try {
@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity implements
 		//	fis = openFileInput(PermissionRiskValueList.EXLISTFILENAME);
 		//	fis.close();
 		//} catch (Exception e) {
-			copyAsset(PermissionRiskValueList.EXLISTFILENAME);
+			copyAsset(PermissionRiskValueList.getInstance().getFilename());
 		//}
 
 		ApplicationExceptionList.getInstance().loadFromMemory(this);
@@ -174,7 +174,7 @@ public class MainActivity extends ActionBarActivity implements
 			TextView averageAppRatingTextBox = (TextView) context
 					.findViewById(R.id.averageAppRatingTextBox);
 			averageAppRatingTextBox.setText("Average App Rating: "
-					+ String.valueOf(rating.getAverageApplicationRating()));
+					+ String.valueOf(String.format("%.2f",rating.getAverageApplicationRating())));
 
 			TextView systemRatingTextBox = (TextView) context
 					.findViewById(R.id.systemRatingTextBox);

@@ -33,8 +33,6 @@ abstract class PersistantList<T> {
 	 */
 	private static Map<String, ListEntry<?>> list = new HashMap<String, ListEntry<?>>();
 
-	public static final String EXLISTFILENAME = "ExList.xml";
-
 	/**
 	 * Adds the specified application to the list.
 	 * 
@@ -107,11 +105,13 @@ abstract class PersistantList<T> {
 	@SuppressWarnings("unchecked")
 	public boolean loadFromMemory(Activity loader) {
 		try {
-			FileInputStream fis = loader.openFileInput(EXLISTFILENAME);
+			FileInputStream fis = loader.openFileInput(getFilename());
 			XmlPullParser parser = Xml.newPullParser();
 			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 			parser.setInput(fis, null);
-			while (parser.next() != XmlPullParser.END_TAG) {
+			
+			
+			while (parser.next() != XmlPullParser.END_DOCUMENT) {
 				parser.require(XmlPullParser.START_TAG, null, "ListEntry");
 				parser.nextTag();
 				parser.require(XmlPullParser.START_TAG, null, "entryName");
@@ -127,6 +127,7 @@ abstract class PersistantList<T> {
 				}
 				list.put(entryName,
 						new ListEntry<Object>(entryName, entryValue));
+				parser.next();
 			}
 			fis.close();
 		} catch (FileNotFoundException e) {
@@ -158,7 +159,7 @@ abstract class PersistantList<T> {
 	 */
 	public boolean saveToMemory(Activity saver) {
 		try {
-			FileOutputStream fos = saver.openFileOutput(EXLISTFILENAME,
+			FileOutputStream fos = saver.openFileOutput(getFilename(),
 					Context.MODE_PRIVATE);
 			XmlSerializer xmlSerializer = Xml.newSerializer();
 			StringWriter writer = new StringWriter();
@@ -222,4 +223,6 @@ abstract class PersistantList<T> {
 			}
 		}
 	}
+	
+	public abstract String getFilename();
 }

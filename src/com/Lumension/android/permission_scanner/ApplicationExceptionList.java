@@ -13,8 +13,6 @@ public class ApplicationExceptionList extends PersistantList<String> {
 	 */
 	public static ApplicationExceptionList instance = null;
 
-	public static final String EXLISTFILENAME = "AppExList.xml";
-
 	/**
 	 * Get the singleton {@link ApplicationExceptionList} instance and create it
 	 * if it doesn't exist.
@@ -25,5 +23,10 @@ public class ApplicationExceptionList extends PersistantList<String> {
 		if (instance == null)
 			instance = new ApplicationExceptionList();
 		return instance;
+	}
+
+	@Override
+	public String getFilename() {
+		return "AppExList.xml";
 	}
 }
