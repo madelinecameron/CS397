@@ -11,6 +11,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Adapts the PermissionRiskValueList to rows for a ListView with editable risk values
+ * 
+ * @author Ean Lombardo
+ *
+ */
 public class PermissionAdapter extends android.widget.ArrayAdapter<ListEntry<Integer>> {
 	
 	List<ListEntry<Integer>> data;
@@ -48,12 +54,18 @@ public class PermissionAdapter extends android.widget.ArrayAdapter<ListEntry<Int
 		return row;
 	}
 	
+	/**
+	 * Returns the item a specific index refers too, Overriden to support scrolled lists
+	 */
 	@Override
 	public ListEntry<Integer> getItem(int pos)
 	{
 		return data.get(pos);
 	}
 	
+	/**
+	 * Returns the amount of items the list has, Overriden to support scrolled lists
+	 */
 	@Override 
 	public int getCount()
 	{

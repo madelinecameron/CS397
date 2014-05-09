@@ -6,6 +6,13 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+/**
+ * An edit text extended to support removing and get the count of TextWatchers added to it.
+ * 
+ * Courtesy of inazaruk from http://stackoverflow.com/questions/6270484/how-to-remove-all-listeners-added-with-addtextchangedlistener
+ * @author inazaruk
+ *
+ */
 public class ExtendedEditText extends EditText
 {   
     private ArrayList<TextWatcher> mListeners = null;

@@ -13,7 +13,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 
-
+/**
+ * The activity that displayes a list of the permissions with editable weights
+ * @author Ean Lombardo
+ *
+ */
 public class PermissionListActivity extends ActionBarActivity implements OnItemClickListener{
 	/**
 	 * Handles the navigation drawer
@@ -47,6 +51,9 @@ public class PermissionListActivity extends ActionBarActivity implements OnItemC
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}
 	
+	/**
+	 * Handles a user clicking in the application drawer
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -64,6 +71,9 @@ public class PermissionListActivity extends ActionBarActivity implements OnItemC
 		mDrawerLayout.closeDrawers();
 	}
 	
+	/**
+	 * Handles the drawer opening when the icon is clicked
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (drawerToggle.onOptionsItemSelected(item)) {
 			return true;
